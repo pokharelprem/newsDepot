@@ -21,7 +21,7 @@ interface NewsApi {
     suspend fun getEverything(
         @Query("q") quotes: String,
         @Query("apiKey") apiKey: String
-    ): TotalNews
+    ): AllNews
 
     @GET("/v2/top-headlines")
     suspend fun getTopHeadlines(
@@ -29,23 +29,15 @@ interface NewsApi {
         @Query("category") category: String,
         @Query("sources") sources: String,
         @Query("apiKey") apiKey: String
-    ): TotalNews
+    ): AllNews
 
     @GET("/v2/top-headlines")
     suspend fun getTopHeadlines(
         @Query("country") country: String,
         @Query("apiKey") apiKey: String
-    ): TotalNews
+    ): AllNews
 
     // NB: Everything below here is fine, no need to change it
-
-    class TotalNews(val data: AllNews)
-
-    class AllNews(
-        val newsList: List<NewsPost>,
-        val status: String,
-        val allNewsCount: Int
-    )
 
     // This class allows Retrofit to parse items in our model of type
     // SpannableString.  Note, given the amount of "work" we do to
@@ -74,7 +66,7 @@ interface NewsApi {
         //private const val BASE_URL = "https://www.reddit.com/"
         var httpurl = HttpUrl.Builder()
             .scheme("https")
-            .host("www.newsapi.org")
+            .host("newsapi.org")
             .build()
 
         fun create(): NewsApi = create(httpurl)
