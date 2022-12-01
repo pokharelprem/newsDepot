@@ -27,7 +27,6 @@ interface NewsApi {
     suspend fun getTopHeadlines(
         @Query("country") country: String,
         @Query("category") category: String,
-        @Query("sources") sources: String,
         @Query("apiKey") apiKey: String
     ): AllNews
 
