@@ -30,10 +30,7 @@ class NewsPostRepository(private val newsApi: NewsApi) {
     ): MutableLiveData<List<NewsPost>> {
         // XXX Write me.
         val newsList = MutableLiveData<List<NewsPost>>()
-
-        val call = RetrofitHelper.getInstance().create(NewsApi::class.java)
-            .getTopHeadlines(country, category, apiKey)
-
+        val call = NewsApi.create().getTopHeadlines(country, category, apiKey)
         call.enqueue(object :
             Callback<AllNews> {
             override fun onResponse(
