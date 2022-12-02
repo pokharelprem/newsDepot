@@ -17,8 +17,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModelProvider
 import com.nepaltech.news.depot.api.NewsPost
+import com.nepaltech.news.depot.model.Constants.NEWS_AUTHOR
 import com.nepaltech.news.depot.model.Constants.NEWS_CONTENT
+import com.nepaltech.news.depot.model.Constants.NEWS_DESCRIPTION
 import com.nepaltech.news.depot.model.Constants.NEWS_IMAGE_URL
+import com.nepaltech.news.depot.model.Constants.NEWS_PUBLICATION_TIME
+import com.nepaltech.news.depot.model.Constants.NEWS_SOURCE
+import com.nepaltech.news.depot.model.Constants.NEWS_SOURCE_ID
+import com.nepaltech.news.depot.model.Constants.NEWS_TITLE
 import com.nepaltech.news.depot.model.Constants.NEWS_URL
 import com.nepaltech.news.depot.model.MainViewModel
 import java.util.*
@@ -47,23 +53,23 @@ class ReadNewsActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         val newsUrl = intent.getStringExtra(NEWS_URL)
         val newsContent =
             intent.getStringExtra(NEWS_CONTENT) + ". get paid version to hear full news. "
-/*        val newsSource
-        newsData.add(
-*//*            NewsPost(
-                intent.getStringExtra(NEWS_TITLE)!!,
-                intent.getStringExtra(NEWS_IMAGE_URL),
-                intent.getStringExtra(NEWS_DESCRIPTION),
-                newsUrl,
-                intent.getStringExtra(NEWS_SOURCE),
-                intent.getStringExtra(NEWS_PUBLICATION_TIME),
-                newsContent
-            )*//*
-
-        NewsPost(
-null,
-            intent.getStringExtra(NEWS_IMAGE_URL)!!,
-        )
-        )*/
+        val newsSource =
+            newsData.add(
+                NewsPost(
+                    NewsPost.Source(
+                        sourceName = intent.getStringExtra(NEWS_SOURCE), id = intent.getStringExtra(
+                            NEWS_SOURCE_ID
+                        )
+                    ),
+                    intent.getStringExtra(NEWS_TITLE)!!,
+                    intent.getStringExtra(NEWS_AUTHOR),
+                    intent.getStringExtra(NEWS_DESCRIPTION),
+                    newsUrl,
+                    intent.getStringExtra(NEWS_IMAGE_URL),
+                    intent.getSerializableExtra(NEWS_PUBLICATION_TIME) as Date,
+                    newsContent
+                )
+            )
 
         // Webview
         newsWebView.apply {

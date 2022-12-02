@@ -18,10 +18,8 @@ class MainViewModel : ViewModel() {
 
     private val newsApi = NewsApi.create()
     private val newsPostRepository = NewsPostRepository(newsApi)
+    private var newsLiveData: MutableLiveData<List<NewsPost>>? = null
 
-    private var newsLiveData = MutableLiveData<List<NewsPost>>().apply {
-        value = listOf()
-    }
 
     var savedNewsData = MutableLiveData<List<NewsPost>>().apply {
 
@@ -31,30 +29,19 @@ class MainViewModel : ViewModel() {
     private var apiKey: String? = null
     var fetchDone: MutableLiveData<Boolean> = MutableLiveData(false)
 
-    init {
-        netRefresh()
-    }
+    fun getNews(countryCd: String?, category: String?): MutableLiveData<List<NewsPost>>? {
 
-    private fun netRefresh() {
-        // XXX Write me.  This is where the network request is initiated.
-        viewModelScope.launch(
-            context = viewModelScope.coroutineContext
-                    + Dispatchers.IO
-        ) {
-            // Update LiveData from IO dispatcher, use postValue
-            newsLiveData.postValue(countryCode?.let {
-                apiKey?.let { it1 ->
-                    newsPostRepository.getTopHeadlines(it, it1)
+        newsLiveData = countryCd?.let {
+            category?.let { it1 ->
+                apiKey?.let { it2 ->
+                    newsPostRepository.getTopHeadlines(it, it1, it2)
                 }
-            })
+            }
         }
-        fetchDone.postValue(true)
-        Log.d(newsLiveData.value.toString(), "NewsList")
-    }
 
-    fun getNews(countryCd: String?, category: String?): MutableLiveData<List<NewsPost>> {
+        return newsLiveData
 
-        viewModelScope.launch(
+/*        viewModelScope.launch(
             context = viewModelScope.coroutineContext
                     + Dispatchers.IO
         ) {
@@ -69,7 +56,7 @@ class MainViewModel : ViewModel() {
         }
         fetchDone.postValue(true)
         Log.d(newsLiveData.value.toString(), "NewsList")
-        return newsLiveData
+        return newsLiveData */
 
     }
 

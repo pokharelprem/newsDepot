@@ -4,7 +4,8 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="title_top_news">Top News</string>
-    <string name="apiKey">4d81c2a6a9c34b5996dab28403c296d7</string>
+    <!--<string name="apiKey">4d81c2a6a9c34b5996dab28403c296d7</string>-->
+    <string name="apiKey">3ea0d3e96cfa467d80e1d7979f603ce3</string>
     <string name="internet_warming">Check your Internet Connection and Try Again!</string>
     <string name="news_placeholder">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</string>
     <string name="top_headlines">Top Headlines</string>

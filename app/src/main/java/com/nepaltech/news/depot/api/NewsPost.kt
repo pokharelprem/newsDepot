@@ -11,38 +11,38 @@ import java.util.*
 data class NewsPost(
 
     @SerializedName("source")
-    var source: Source,
+    var source: Source? = null,
 
     @SerializedName("title")
-    val newsTitle: String,
+    val newsTitle: String? = null,
 
     @SerializedName("author")
-    val author: String,
+    val author: String? = null,
 
     @SerializedName("description")
-    val newsDescription: SpannableString,
+    val newsDescription: String? = null,
 
     @SerializedName("url")
-    val newsUrl: String,
+    val newsUrl: String? = null,
 
     @SerializedName("urlToImage")
-    val newsImage: String,
+    val newsImage: String? = null,
 
     @SerializedName("publishedAt")
-    val newsPublishedDate: Date,
+    val newsPublishedDate: Date? = null,
 
     @SerializedName("content")
-    val content: SpannableString
+    val content: String? = null
 
 ) {
     //Added for Child JSON Object
-    class Source {
+    class Source(
         @SerializedName("name")
-        val sourceName: String? = null
+        val sourceName: String? = null,
 
         @SerializedName("id")
         val id: String? = null
-    }
+    ){}
 
     companion object {
         // NB: This only highlights the first match in a string

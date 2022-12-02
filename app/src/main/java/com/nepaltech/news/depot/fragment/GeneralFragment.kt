@@ -86,7 +86,7 @@ class GeneralFragment : Fragment() {
                             NEWS_DESCRIPTION,
                             newsDataForTopHeadlines[position].newsDescription
                         )
-                        putExtra(NEWS_SOURCE, newsDataForTopHeadlines[position].source.sourceName)
+                        putExtra(NEWS_SOURCE, newsDataForTopHeadlines[position].source?.sourceName)
                         putExtra(
                             NEWS_PUBLICATION_TIME,
                             newsDataForTopHeadlines[position].newsPublishedDate
@@ -110,7 +110,7 @@ class GeneralFragment : Fragment() {
                     putExtra(NEWS_TITLE, newsDataForTopHeadlines[position].newsTitle)
                     putExtra(NEWS_IMAGE_URL, newsDataForTopHeadlines[position].newsImage)
                     putExtra(NEWS_DESCRIPTION, newsDataForTopHeadlines[position].newsDescription)
-                    putExtra(NEWS_SOURCE, newsDataForTopHeadlines[position].source.sourceName)
+                    putExtra(NEWS_SOURCE, newsDataForTopHeadlines[position].source?.sourceName)
                     putExtra(
                         NEWS_PUBLICATION_TIME,
                         newsDataForTopHeadlines[position].newsPublishedDate

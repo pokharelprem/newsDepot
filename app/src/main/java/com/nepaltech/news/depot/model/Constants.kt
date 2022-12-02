@@ -11,6 +11,7 @@ object Constants {
     const val SPORTS = "sports"
     const val NEWS_URL = "news url"
     const val NEWS_TITLE = "news title"
+    const val NEWS_AUTHOR = "news author"
     const val NEWS_IMAGE_URL = "news image url"
     const val NEWS_SOURCE = "news source"
     const val NEWS_SOURCE_ID = "news source id"

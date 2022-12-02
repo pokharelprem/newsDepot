@@ -12,9 +12,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.nepaltech.news.depot.R
 import com.nepaltech.news.depot.api.NewsPost
 import com.squareup.picasso.Picasso
-import java.time.Duration
-import java.time.Instant
-import java.time.ZoneId
 import java.util.*
 
 
@@ -57,7 +54,7 @@ class CustomAdapter(private var newsList: List<NewsPost>) :
         val newsData = newsList[holder.adapterPosition]
 
         holder.headLine.text = newsData.newsTitle
-        val time: Date = newsData.newsPublishedDate
+        val time: Date? = newsData.newsPublishedDate
         val imgUrl = newsData.newsImage
 
         if (imgUrl.isNullOrEmpty()) {

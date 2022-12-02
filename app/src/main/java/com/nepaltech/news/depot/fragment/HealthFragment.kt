@@ -44,7 +44,7 @@ class HealthFragment : Fragment() {
                     putExtra(NEWS_TITLE, newsData[position].newsTitle)
                     putExtra(NEWS_IMAGE_URL, newsData[position].newsImage)
                     putExtra(NEWS_DESCRIPTION, newsData[position].newsDescription)
-                    putExtra(NEWS_SOURCE, newsData[position].source.sourceName)
+                    putExtra(NEWS_SOURCE, newsData[position].source?.sourceName)
                     putExtra(NEWS_PUBLICATION_TIME, newsData[position].newsPublishedDate)
                     putExtra(NEWS_CONTENT, newsData[position].content)
                 }

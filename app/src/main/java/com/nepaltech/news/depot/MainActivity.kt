@@ -1,10 +1,13 @@
 package com.nepaltech.news.depot
 
 import android.content.Context
+import android.content.Intent
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
 import androidx.activity.viewModels
@@ -31,15 +34,13 @@ import com.nepaltech.news.depot.model.MainViewModel
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityMainBinding
+    //private lateinit var binding: ActivityMainBinding
 
     private val newsCategories = arrayOf(
         HOME, BUSINESS,
         ENTERTAINMENT, SCIENCE,
         SPORTS, TECHNOLOGY, HEALTH
     )
-
-    //private var viewModel: MainViewModel by viewModels()
 
     private lateinit var tabLayout: TabLayout
     private lateinit var viewPager: ViewPager2
@@ -63,14 +64,12 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        //binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(R.layout.activity_main)
 
         // Set Action Bar
-        //val toolbar: Toolbar = findViewById(R.id.toolbar)
-        //setSupportActionBar(toolbar)
-
-
+        val toolbar: Toolbar = findViewById(R.id.toolbar)
+        setSupportActionBar(toolbar)
 
         tabLayout = findViewById(R.id.tab_layout)
         viewPager = findViewById(R.id.view_pager)
@@ -102,8 +101,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun requestNews(newsCategory: String, newsData: MutableList<NewsPost>) {
-        viewModel.getNews("us", category = newsCategory).observe(this) {
-            if(it!=null) {newsData.addAll(it)}
+        viewModel.getNews("us", newsCategory)?.observe(this) {
+    //            if(it!=null) {newsData.addAll(it)}
+            newsData.addAll(it)
+
             totalRequestCount += 1
 
             // If main fragment loaded then attach the fragment to viewPager
@@ -156,5 +157,16 @@ class MainActivity : AppCompatActivity() {
             }
         }
         return false
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_item_mainactivity, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        intent = Intent(applicationContext, SavedNewsActivity::class.java)
+        startActivity(intent)
+        return super.onOptionsItemSelected(item)
     }
 }

@@ -8,6 +8,7 @@ import com.google.gson.JsonElement
 import okhttp3.HttpUrl
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
@@ -24,11 +25,11 @@ interface NewsApi {
     ): AllNews
 
     @GET("/v2/top-headlines")
-    suspend fun getTopHeadlines(
+     fun getTopHeadlines(
         @Query("country") country: String,
         @Query("category") category: String,
         @Query("apiKey") apiKey: String
-    ): AllNews
+    ): Call<AllNews>
 
     @GET("/v2/top-headlines")
     suspend fun getTopHeadlines(
