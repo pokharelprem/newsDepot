@@ -1,18 +1,10 @@
 package com.nepaltech.news.depot.model
 
-import android.content.Context
-import android.util.Log
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.nepaltech.news.depot.ReadNewsActivity
-import com.nepaltech.news.depot.SavedNewsActivity
 import com.nepaltech.news.depot.api.NewsApi
 import com.nepaltech.news.depot.api.NewsPost
 import com.nepaltech.news.depot.api.NewsPostRepository
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 class MainViewModel : ViewModel() {
 
@@ -21,8 +13,8 @@ class MainViewModel : ViewModel() {
     private var newsLiveData: MutableLiveData<List<NewsPost>>? = null
 
 
-    var savedNewsData = MutableLiveData<List<NewsPost>>().apply {
-
+    var savedNewsData = MutableLiveData<MutableList<NewsPost>>().apply {
+        value = mutableListOf()
     }
 
     private var countryCode: String? = null
@@ -38,26 +30,7 @@ class MainViewModel : ViewModel() {
                 }
             }
         }
-
         return newsLiveData
-
-/*        viewModelScope.launch(
-            context = viewModelScope.coroutineContext
-                    + Dispatchers.IO
-        ) {
-            // Update LiveData from IO dispatcher, use postValue
-            newsLiveData.postValue(countryCd?.let {
-                category?.let { it1 ->
-                    apiKey?.let { it2 ->
-                        newsPostRepository.getTopHeadlines(it, it1, it2)
-                    }
-                }
-            })
-        }
-        fetchDone.postValue(true)
-        Log.d(newsLiveData.value.toString(), "NewsList")
-        return newsLiveData */
-
     }
 
     fun setApiKey(s: String) {
@@ -68,15 +41,15 @@ class MainViewModel : ViewModel() {
         countryCode = countryCd
     }
 
-    fun getSavedNewsFromDB(context: Context): LiveData<List<NewsPost>> {
+    fun getSavedNews(): MutableLiveData<MutableList<NewsPost>> {
         return savedNewsData
     }
 
-    fun deleteNews(it: SavedNewsActivity, news: NewsPost) {
-        savedNewsData.value?.minus(news)
+    fun deleteNews(news: NewsPost) {
+        savedNewsData.value?.remove(news)
     }
 
-    fun insertNews(readNewsActivity: ReadNewsActivity, newsPost: NewsPost) {
-        savedNewsData.value?.plus(newsPost)
+    fun insertNews(newsPost: NewsPost) {
+        savedNewsData.value?.add(newsPost)
     }
 }

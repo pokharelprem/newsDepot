@@ -1,5 +1,6 @@
 package com.nepaltech.news.depot
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.net.ConnectivityManager
@@ -10,7 +11,6 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModelProvider
@@ -20,7 +20,6 @@ import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.nepaltech.news.depot.adapter.FragmentAdapter
 import com.nepaltech.news.depot.api.NewsPost
-import com.nepaltech.news.depot.databinding.ActivityMainBinding
 import com.nepaltech.news.depot.model.Constants.BUSINESS
 import com.nepaltech.news.depot.model.Constants.ENTERTAINMENT
 import com.nepaltech.news.depot.model.Constants.GENERAL
@@ -33,8 +32,6 @@ import com.nepaltech.news.depot.model.Constants.TOTAL_NEWS_TAB
 import com.nepaltech.news.depot.model.MainViewModel
 
 class MainActivity : AppCompatActivity() {
-
-    //private lateinit var binding: ActivityMainBinding
 
     private val newsCategories = arrayOf(
         HOME, BUSINESS,
@@ -60,14 +57,12 @@ class MainActivity : AppCompatActivity() {
         var apiRequestError = false
         var errorMessage = "error"
     }
-    
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        //binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(R.layout.activity_main)
 
-        // Set Action Bar
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
@@ -93,7 +88,6 @@ class MainActivity : AppCompatActivity() {
         requestNews(SCIENCE, scienceNews)
         requestNews(SPORTS, sportsNews)
         requestNews(TECHNOLOGY, techNews)
-
         fragmentAdapter = FragmentAdapter(supportFragmentManager, lifecycle)
         viewPager.adapter = fragmentAdapter
         viewPager.visibility = View.GONE
@@ -102,30 +96,41 @@ class MainActivity : AppCompatActivity() {
 
     private fun requestNews(newsCategory: String, newsData: MutableList<NewsPost>) {
         viewModel.getNews("us", newsCategory)?.observe(this) {
-    //            if(it!=null) {newsData.addAll(it)}
             newsData.addAll(it)
-
             totalRequestCount += 1
-
-            // If main fragment loaded then attach the fragment to viewPager
             if (newsCategory == GENERAL) {
                 shimmerLayout.stopShimmer()
                 shimmerLayout.hideShimmer()
                 shimmerLayout.visibility = View.GONE
                 setViewPager()
             }
-
             if (totalRequestCount == TOTAL_NEWS_TAB) {
                 viewPager.offscreenPageLimit = 7
             }
         }
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     private fun setViewPager() {
         if (!apiRequestError) {
             viewPager.visibility = View.VISIBLE
             TabLayoutMediator(tabLayout, viewPager) { tab, position ->
                 tab.text = newsCategories[position]
+                if (newsCategories[position] == HEALTH) {
+                    tab.icon = resources.getDrawable(R.drawable.ic_health)
+                } else if (newsCategories[position] == BUSINESS) {
+                    tab.icon = resources.getDrawable(R.drawable.ic_business)
+                } else if (newsCategories[position] == ENTERTAINMENT) {
+                    tab.icon = resources.getDrawable(R.drawable.ic_entertainment)
+                } else if (newsCategories[position] == HOME) {
+                    tab.icon = resources.getDrawable(R.drawable.ic_home_black_24dp)
+                } else if (newsCategories[position] == TECHNOLOGY) {
+                    tab.icon = resources.getDrawable(R.drawable.ic_technology)
+                } else if (newsCategories[position] == SCIENCE) {
+                    tab.icon = resources.getDrawable(R.drawable.ic_science)
+                } else if (newsCategories[position] == SPORTS) {
+                    tab.icon = resources.getDrawable(R.drawable.ic_sports)
+                }
             }.attach()
         } else {
             val showError: TextView = findViewById(R.id.display_error)
@@ -134,12 +139,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    // Check internet connection
     private fun isNetworkAvailable(context: Context): Boolean {
         val connectivityManager =
             context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
-        // For 29 api or above
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             val capabilities =
                 connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
@@ -151,7 +154,6 @@ class MainActivity : AppCompatActivity() {
                 else -> false
             }
         } else {
-            // For below 29 api
             if (connectivityManager.activeNetworkInfo != null && connectivityManager.activeNetworkInfo!!.isConnectedOrConnecting) {
                 return true
             }

@@ -49,7 +49,8 @@ class SavedNewsActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this)[MainViewModel::class.java]
 
         // Get Saved News
-        viewModel.getSavedNewsFromDB(context = applicationContext)?.observe(this) {
+        viewModel.getSavedNews().observe(this) {
+            val list = viewModel.getSavedNews().value
             newsData.clear()
             newsData.addAll(it)
             adapter.notifyDataSetChanged()
@@ -89,7 +90,6 @@ class SavedNewsActivity : AppCompatActivity() {
                     ) { _, _ ->
                         this@SavedNewsActivity.let {
                             viewModel.deleteNews(
-                                it,
                                 news = newsData[position]
                             )
                         }

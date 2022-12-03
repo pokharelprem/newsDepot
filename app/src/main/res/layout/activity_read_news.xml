@@ -10,7 +10,7 @@
         android:id="@+id/appbar_layout"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
+        android:background="@color/amber_900"
         app:elevation="0dp">
 
         <com.google.android.material.appbar.MaterialToolbar

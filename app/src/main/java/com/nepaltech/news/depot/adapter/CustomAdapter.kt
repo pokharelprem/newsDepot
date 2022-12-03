@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.nepaltech.news.depot.R
 import com.nepaltech.news.depot.api.NewsPost
 import com.squareup.picasso.Picasso
+import java.time.Instant
+import java.time.ZoneId
 import java.util.*
 
 
@@ -73,14 +75,16 @@ class CustomAdapter(private var newsList: List<NewsPost>) :
         }
 
         if (context.toString().contains("SavedNews")) {
-            //val date = " " + time.substring(0, time.indexOf('T', 0))
             holder.newsPublicationTime.text = time.toString()
         } else {
- /*           val currentTimeInHours = Instant.now().atZone(ZoneId.of("Asia/Kolkata"))
-            val newsTimeInHours = Instant.parse(time.toString()).atZone(ZoneId.of("Asia/Kolkata"))
-            val hoursDifference = Duration.between(currentTimeInHours, newsTimeInHours)
-            val hoursAgo = " " + hoursDifference.toHours().toString().substring(1) + " hour ago"
- */           holder.newsPublicationTime.text = "2"
+            val currentTimeInHours = Instant.now().atZone(ZoneId.of("America/Chicago"))
+            val calendar : Calendar = Calendar.getInstance()
+            if (time != null) {
+                calendar.time = time
+            }
+            val hoursDifference = currentTimeInHours.hour - calendar.get(Calendar.HOUR_OF_DAY)
+            val hoursAgo = " $hoursDifference hour ago"
+            holder.newsPublicationTime.text = hoursAgo
         }
 
     }

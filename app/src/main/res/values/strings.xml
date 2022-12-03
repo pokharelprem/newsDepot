@@ -4,8 +4,12 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="title_top_news">Top News</string>
-    <!--<string name="apiKey">4d81c2a6a9c34b5996dab28403c296d7</string>-->
+    <string name="apiKey">46fa9ed1ad85448cad4bda8af56ba98d</string>
+<!--
     <string name="apiKey">3ea0d3e96cfa467d80e1d7979f603ce3</string>
+-->
+
+    46fa9ed1ad85448cad4bda8af56ba98d
     <string name="internet_warming">Check your Internet Connection and Try Again!</string>
     <string name="news_placeholder">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</string>
     <string name="top_headlines">Top Headlines</string>
@@ -13,4 +17,17 @@
     <string name="share">Share</string>
     <string name="save">Read later</string>
     <string name="listen">Listen</string>
+
+    <string name="cancel">Cancel</string>
+    <string name="ok">OK</string>
+    <string name="category_business">Business</string>
+    <string name="category_entertainment">Entertainment</string>
+    <string name="category_health">Health</string>
+    <string name="category_science">Science</string>
+    <string name="category_sports">Sports</string>
+    <string name="category_technology">Technology</string>
+    <string name="news">News</string>
+    <string name="news_dialog_info">Go to Website for more details.</string>
+    <string name="goto_website">Go to Website</string>
+    <string name="search_in_everything">Search in everything…</string>
 </resources>

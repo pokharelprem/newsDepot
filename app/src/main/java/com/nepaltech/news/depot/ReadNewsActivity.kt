@@ -30,12 +30,11 @@ import com.nepaltech.news.depot.model.MainViewModel
 import java.util.*
 
 
-class ReadNewsActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
+class ReadNewsActivity : AppCompatActivity() {
 
     private lateinit var newsWebView: WebView
     private lateinit var viewModel: MainViewModel
     private lateinit var newsData: ArrayList<NewsPost>
-    private lateinit var tts: TextToSpeech
 
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -87,46 +86,8 @@ class ReadNewsActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         if (newsUrl != null) {
             newsWebView.loadUrl(newsUrl)
         }
-
-        //text to speech
-        tts = TextToSpeech(this, this)
-
     }
 
-
-    override fun onInit(status: Int) {
-
-        if (status == TextToSpeech.SUCCESS) {
-            val result = tts.setLanguage(Locale.ENGLISH)
-            if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
-                Toast.makeText(this, "TTS Not Supported for this news", Toast.LENGTH_LONG)
-                    .show()
-            }
-        }
-    }
-
-    private fun playNews() {
-        tts.speak(newsData[0].content, TextToSpeech.QUEUE_FLUSH, null, "")
-    }
-
-    // Adding voices
-    private val voice1: Voice = Voice(
-        "en-US-SMTf00",
-        Locale("en", "USA"),
-        300,
-        300,
-        false,
-        setOf("NA", "f00", "202009152", "female", null)
-    )
-    private val voice2: Voice = Voice(
-        "en-IN-SMTf00",
-        Locale("en", "IND"),
-        300,
-        300,
-        false,
-        setOf("NA", "f00", "202007071", "female", null)
-    )
-    private val addedVoices: Set<Voice> = setOf(voice1, voice2)
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_item_readnewsactivity, menu)
@@ -149,7 +110,7 @@ class ReadNewsActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
             }
 
             R.id.save_news -> {
-                this.let { viewModel.insertNews(this@ReadNewsActivity, newsData[0]) }
+                this.let { viewModel.insertNews(newsData[0]) }
                 Toast.makeText(this, "News saved!", Toast.LENGTH_SHORT)
                     .show()
             }
@@ -158,48 +119,6 @@ class ReadNewsActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse(newsData[0].newsUrl))
                 startActivity(intent)
             }
-
-            // Menu items for vocal news
-            R.id.play_news -> {
-                playNews()
-            }
-
-            R.id.stop_news -> {
-                tts.stop()
-            }
-
-            R.id.speed_075x -> {
-                tts.stop()
-                tts.setSpeechRate(0.75F)
-                playNews()
-            }
-
-            R.id.speed_1x -> {
-                tts.stop()
-                tts.setSpeechRate(1F)
-                playNews()
-            }
-
-            R.id.speed_2x -> {
-                tts.stop()
-                tts.setSpeechRate(2F)
-                playNews()
-            }
-
-            R.id.voice1 -> {
-
-                tts.stop()
-                tts.voice = addedVoices.elementAt(0)
-                playNews()
-
-            }
-
-            R.id.voice2 -> {
-                tts.stop()
-                tts.voice = addedVoices.elementAt(1)
-                playNews()
-            }
-
             else -> return super.onOptionsItemSelected(item)
         }
 
@@ -207,8 +126,6 @@ class ReadNewsActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     }
 
     override fun onDestroy() {
-        tts.stop()
-        tts.shutdown()
         super.onDestroy()
     }
 }
