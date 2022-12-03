@@ -103,13 +103,10 @@ class SavedNewsActivity : AppCompatActivity() {
                         )
                     }
                 }.create()
-
                 alertDialog.show()
             }
         })
-
         recyclerView.adapter = adapter
-
     }
 
     @ColorInt
